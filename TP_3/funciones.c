@@ -230,11 +230,11 @@ int movie_remove(EMovie* lista,int tam)
     int idRemove;
     int index;
     char confirmar;
+    int guardar;
 
     if(lista!=NULL && tam>0)
     {
         retorno = -2;
-        system("cls");
         movie_mostrarTitulos(lista,tam);
         printf("\nIngrese ID de la pelicula para eliminar: ");
         scanf("%d",&idRemove);
@@ -250,7 +250,16 @@ int movie_remove(EMovie* lista,int tam)
             {
                 retorno = 0;
                 (lista+index)->estado = LIBRE;
-                movie_guardarArchivo(lista,tam);
+                guardar = movie_guardarArchivo(lista, tam);
+
+                if(guardar == 0)
+                {
+                    printf("\nSe guardo archivo correctamente\n");
+                }
+                else
+                {
+                    printf("\nError al guardar archivo\n");
+                }
             }
         }
     }
@@ -312,6 +321,154 @@ int movie_buscarId(EMovie* lista,int limite,int id)
                 break;
             }
         }
+    }
+    return retorno;
+}
+
+int movie_modificar(EMovie* lista,int tam)
+{
+    int retorno = -1;
+    int idModificar;
+    int index;
+    char seguir='s';
+    int opcion=0;
+    char titulo[51];
+    char genero[21];
+    int duracion;
+    char descripcion[251];
+    int puntaje;
+    char linkImagen[251];
+    int guardar;
+
+    if(lista!=NULL && tam>0)
+    {
+        retorno = -2;
+        movie_mostrar(lista,tam);
+        printf("\nIngrese ID de la pelicula para modificar: ");
+        scanf("%d",&idModificar);
+
+        index = movie_buscarId(lista,tam,idModificar);
+        if(index >= 0)
+        {
+            retorno = 0;
+            while(seguir=='s')
+            {
+                system("cls");
+                printf("1- Modificar titulo\n");
+                printf("2- Modificar genero\n");
+                printf("3- Modificar duracion\n");
+                printf("4- Modificar descripcion\n");
+                printf("5- Modificar puntaje\n");
+                printf("6- Modificar link de imagen\n");
+                printf("7- Salir\n");
+
+                scanf("%d",&opcion);
+
+                switch(opcion)
+                {
+                    case 1:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese titulo (hasta 50 caracteres): ");
+                            fflush(stdin);
+                            gets(titulo);
+                        }while(strlen(titulo) >= 50);
+
+                        strcpy((lista+index)->titulo, titulo);
+                        break;
+
+                    case 2:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese genero (hasta 20 caracteres): ");
+                            fflush(stdin);
+                            gets(genero);
+                        }while(strlen(genero) >= 20);
+
+                        strcpy((lista+index)->genero, genero);
+                        break;
+
+                    case 3:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese duracion en minutos (hasta 250 min): ");
+                            scanf("%d", &duracion);
+                        }while(!(duracion > 0 && duracion <= 250));
+
+                        (lista+index)->duracion = duracion;
+                        break;
+
+                    case 4:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese descripcion (hasta 250 caracteres): ");
+                            fflush(stdin);
+                            gets(descripcion);
+                        }while(strlen(descripcion) >= 250);
+
+                        strcpy((lista+index)->descripcion, descripcion);
+                        break;
+
+                    case 5:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese puntaje entre 0 y 10: ");
+                            scanf("%d", &puntaje);
+                        }while(!(puntaje >= 0 && puntaje <= 10));
+
+                        (lista+index)->puntaje = puntaje;
+                        break;
+
+                    case 6:
+                        system("cls");
+                        do
+                        {
+                            printf("-Ingrese link de imagen (hasta 250 caracteres): ");
+                            fflush(stdin);
+                            gets(linkImagen);
+                        }while(strlen(linkImagen) >= 250);
+
+                        strcpy((lista+index)->linkImagen, linkImagen);
+                        break;
+
+                    case 7:
+                        seguir = 'n';
+                        break;
+
+                    default:
+                    printf("Opcion incorrecta\n\n");
+                    system("pause");
+                    break;
+                }
+            }
+            guardar = movie_guardarArchivo(lista, tam);
+
+            if(guardar == 0)
+            {
+                printf("\nSe guardo archivo correctamente\n");
+            }
+            else
+            {
+                printf("\nError al guardar archivo\n");
+            }
+        }
+    }
+    return retorno;
+}
+
+int movie_generarPaginaWeb(EMovie* lista,int tam)
+{
+    int retorno = -1;
+    int i;
+
+    if(lista!=NULL && tam>0)
+    {
+        retorno = -2;
     }
     return retorno;
 }

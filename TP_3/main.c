@@ -25,7 +25,8 @@ int main()
         printf("2- Borrar pelicula\n");
         printf("3- Modificar pelicula\n");
         printf("4- Generar pagina web\n");
-        printf("5- Salir\n");
+        printf("5- Listar peliculas\n");
+        printf("6- Salir\n");
 
         scanf("%d",&opcion);
 
@@ -62,14 +63,37 @@ int main()
                 break;
 
             case 3:
+                index = movie_modificar(listaPeliculas,TAM);
+                if(index == 0)
+                {
+                    printf("\n\nSe modifico la pelicula seleccionada.\n");
+                }
+                else
+                {
+                    printf("\nID invalido\n");
+                }
                 system("pause");
                break;
 
             case 4:
+                index = movie_generarPaginaWeb(listaPeliculas,TAM);
+                if(index == 0)
+                {
+                    printf("\n\nSe genero pagina correctamente.\n");
+                }
+                else
+                {
+                    printf("\n\nError.\n");
+                }
                 system("pause");
                 break;
 
             case 5:
+                movie_mostrar(listaPeliculas,TAM);
+                system("pause");
+                break;
+
+            case 6:
                 seguir = 'n';
                 break;
 

@@ -13,19 +13,16 @@ typedef struct
     int estado;
 }EMovie;
 
-/**
- *  Borra una pelicula del archivo binario
- *  @param movie la estructura a ser eliminada al archivo
- *  @return retorna 1 o 0 de acuerdo a si pudo eliminar la pelicula o no
- */
-int borrarPelicula(EMovie movie);
 
 /**
  *  Genera un archivo html a partir de las peliculas cargadas en el archivo binario.
- *  @param lista la lista de peliculas a ser agregadas en el archivo.
- *  @param nombre el nombre para el archivo.
+ * \param lista Puntero a array de peliculas.
+ * \param tam Cantidad de peliculas.
+ * \return int [-1] si la lista es nula o limite invalido
+ *             [-2]
+ *             [0]  todo ok
  */
-void generarPagina(EMovie* lista, char* nombre);
+int movie_generarPaginaWeb(EMovie* lista,int tam);
 
 
 /**
@@ -144,5 +141,16 @@ void movie_mostrarTitulos(EMovie* lista,int limite);
  *             [id]  todo ok
  */
 int movie_buscarId(EMovie* lista,int limite,int id);
+
+
+/**
+ *  Modifica la pelicula seleccionada.
+ * \param lista Puntero a array de peliculas.
+ * \param tam Cantidad de peliculas.
+ * \return int [-1] si la lista es nula o limite invalido
+ *             [-2] si el id es invalido
+ *             [0]  todo ok
+ */
+int movie_modificar(EMovie* lista,int tam);
 
 #endif // FUNCIONES_H_INCLUDED
