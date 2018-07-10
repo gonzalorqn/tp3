@@ -19,7 +19,7 @@ typedef struct
  * \param lista Puntero a array de peliculas.
  * \param tam Cantidad de peliculas.
  * \return int [-1] si la lista es nula o limite invalido
- *             [-2]
+ *             [-2] si hubo error al crear archivo
  *             [0]  todo ok
  */
 int movie_generarPaginaWeb(EMovie* lista,int tam);

@@ -465,10 +465,52 @@ int movie_generarPaginaWeb(EMovie* lista,int tam)
 {
     int retorno = -1;
     int i;
+    FILE* pFile;
 
     if(lista!=NULL && tam>0)
     {
         retorno = -2;
+        pFile = fopen("peliculas.html","w");
+
+        if(pFile!=NULL)
+        {
+            retorno = 0;
+            for(i=0;i<tam;i++)
+            {
+                if((lista+i)->estado == OCUPADO)
+                {
+                    fprintf(pFile,"<html lang='en'>");
+                    fprintf(pFile,"<head>");
+                    fprintf(pFile,"<meta charset='utf-8'>");
+                    fprintf(pFile,"<meta http-equiv='X-UA-Compatible' content='IE=edge'>");
+                    fprintf(pFile,"<meta name='viewport' content='width=device-width, initial-scale=1'>");
+                    fprintf(pFile,"<title>Lista peliculas</title>");
+                    fprintf(pFile,"</head>");
+                    fprintf(pFile,"<body>");
+                    fprintf(pFile,"<div class='container'>");
+                    fprintf(pFile,"<div class='row'>");
+                    fprintf(pFile,"<article class='col-md-4 article-intro'>");
+                    fprintf(pFile,"<a href='#'>");
+                    fprintf(pFile,"<img class='img-responsive img-rounded' src='%s' alt=''>",(lista+i)->linkImagen);
+                    fprintf(pFile,"</a>");
+                    fprintf(pFile,"<h3>");
+                    fprintf(pFile,"<a href='#'>%s</a>",(lista+i)->titulo);
+                    fprintf(pFile,"</h3>");
+                    fprintf(pFile,"<ul>");
+                    fprintf(pFile,"<li>Genero: %s</li>",(lista+i)->genero);
+                    fprintf(pFile,"<li>Puntaje: %d</li>",(lista+i)->puntaje);
+                    fprintf(pFile,"<li>Duracion: %d</li>",(lista+i)->duracion);
+                    fprintf(pFile,"</ul>");
+                    fprintf(pFile,"<p>%s</p>",(lista+i)->descripcion);
+                    fprintf(pFile,"</article>");
+                    fprintf(pFile,"</div>");
+                    fprintf(pFile,"</div>");
+                    fprintf(pFile,"</body>");
+                    fprintf(pFile,"</html>");
+                }
+            }
+            fclose(pFile);
+        }
     }
     return retorno;
 }

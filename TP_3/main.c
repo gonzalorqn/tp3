@@ -17,7 +17,6 @@ int main()
         printf("Error al leer desde archivo");
     }
 
-
     while(seguir=='s')
     {
         system("cls");
@@ -103,6 +102,5 @@ int main()
                 break;
         }
     }
-
     return 0;
 }
